@@ -50,3 +50,14 @@ touch src/client/index.html
   </body>
 </html>
 ```
+```
+npm install babel-loader babel-preset-es2015 babel-preset-react --save
+```
+```
+touch .babelrc
+
+{
+  "presets": ["es2015", "react"]
+}
+```
+
