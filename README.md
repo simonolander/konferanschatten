@@ -115,3 +115,6 @@ resolve: {
   extensions: ['.js', '.jsx'],
 }
 ```
+```
+npm install --save prop-types
+```

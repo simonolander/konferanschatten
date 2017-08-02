@@ -13,10 +13,8 @@ class ChatMessages extends Component {
 
     this.state = {
       text: "",
-      messages: [{
-        id: 1,
-        text: "Hej"
-      }],
+      messages: [],
+      messageId: 1,
       error: undefined
     }
   }
@@ -31,11 +29,12 @@ class ChatMessages extends Component {
         text: '',
         messages: oldState.messages.concat([
           {
-            id: oldState.messages[oldState.messages.length - 1].id + 1,
+            id: oldState.messageId + 1,
             text: oldState.text,
           }
         ]),
-        error: undefined
+        error: undefined,
+        messageId: oldState.messageId + 1
       }))
     }
 

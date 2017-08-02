@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 class ChatMessage extends Component {
   render () {
@@ -8,6 +9,11 @@ class ChatMessage extends Component {
       </li>
     )
   }
+}
+
+ChatMessage.propTypes = {
+  text: PropTypes.string.isRequired,
+  id: PropTypes.any.isRequired
 }
 
 export default ChatMessage
