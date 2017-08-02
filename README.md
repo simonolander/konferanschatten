@@ -99,3 +99,14 @@ render(<App/>, document.getElementById('app'));
   "build" : "webpack -p"
 },
 ```
+```
+npm install react-bootstrap --save
+```
+##### index.html
+```
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap-theme.min.css">
+```
+

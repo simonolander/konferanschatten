@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {render} from 'react-dom';
 
-class App extends React.Component {
+class App extends Component {
   render () {
-    return <p> Hello React!</p>;
+    return (
+      <div className="row">
+        <div className="col-md-6 col-md-offset-3">
+          "Centered stuff there"
+        </div>
+      </div>
+    );
   }
 }
 
