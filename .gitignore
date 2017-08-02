@@ -60,3 +60,4 @@ typings/
 # custom
 *.swp
 src/client/public/bundle.js
+.idea

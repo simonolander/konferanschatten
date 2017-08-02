@@ -109,4 +109,9 @@ npm install react-bootstrap --save
 <!-- Optional theme -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap-theme.min.css">
 ```
-
+##### webpack.config.js
+```
+resolve: {
+  extensions: ['.js', '.jsx'],
+}
+```
