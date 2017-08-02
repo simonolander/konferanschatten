@@ -23,5 +23,7 @@ var config = {
 
 module.exports = config;
 ```
-
+```
+mkdir -p src/client/app
+```
 
