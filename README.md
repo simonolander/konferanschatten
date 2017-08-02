@@ -60,7 +60,7 @@ touch .babelrc
   "presets": ["es2015", "react"]
 }
 ```
-#### webpack.config.js
+##### webpack.config.js
 ```
 // Existing Code ....
 var config = {
@@ -79,7 +79,7 @@ var config = {
 ```
 npm install react react-dom --save
 ```
-### index.jsx
+##### index.jsx
 ```
 import React from 'react';
 import {render} from 'react-dom';
@@ -92,4 +92,10 @@ class App extends React.Component {
 
 render(<App/>, document.getElementById('app'));
 ```
-
+##### package.json
+```
+"scripts": {
+  "dev": "webpack -d --watch",
+  "build" : "webpack -p"
+},
+```
