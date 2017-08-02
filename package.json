@@ -1,0 +1,22 @@
+{
+  "name": "konferenschatten",
+  "version": "1.0.0",
+  "description": "Ett enkelt intro till react",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/simonolander/konferenschatten.git"
+  },
+  "author": "Simon Olander",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/simonolander/konferenschatten/issues"
+  },
+  "homepage": "https://github.com/simonolander/konferenschatten#readme",
+  "dependencies": {
+    "webpack": "^3.4.1"
+  }
+}
