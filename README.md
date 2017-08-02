@@ -51,7 +51,7 @@ touch src/client/index.html
 </html>
 ```
 ```
-npm install babel-loader babel-preset-es2015 babel-preset-react --save
+npm install babel-core babel-loader babel-preset-es2015 babel-preset-react --save
 ```
 ```
 touch .babelrc
@@ -59,5 +59,37 @@ touch .babelrc
 {
   "presets": ["es2015", "react"]
 }
+```
+####webpack.config.js
+```
+// Existing Code ....
+var config = {
+  // Existing Code ....
+  module : {
+    loaders : [
+      {
+        test : /\.jsx?/,
+        include : APP_DIR,
+        loader : 'babel'
+      }
+    ]
+  }
+}
+```
+```
+npm install react react-dom --save
+```
+###index.jsx
+```
+import React from 'react';
+import {render} from 'react-dom';
+
+class App extends React.Component {
+  render () {
+    return <p> Hello React!</p>;
+  }
+}
+
+render(<App/>, document.getElementById('app'));
 ```
 
