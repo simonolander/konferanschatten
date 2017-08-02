@@ -1,12 +1,3 @@
-# Konferenschatten
-## Ett enkelt intro till react
-
-```
-npm init
-npm install webpack --save
-touch webpack.config.js
-```
-```
 var webpack = require('webpack');
 var path = require('path');
 
@@ -22,6 +13,3 @@ var config = {
 };
 
 module.exports = config;
-```
-
-
