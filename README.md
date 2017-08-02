@@ -26,4 +26,13 @@ module.exports = config;
 ```
 mkdir -p src/client/app
 ```
+```
+touch src/client/app/index.jsx
+```
+```
+console.log("Hello JSX")
+```
+```
+./node_modules/.bin/webpack -d
+```
 
