@@ -35,3 +35,18 @@ console.log("Hello JSX")
 ```
 ./node_modules/.bin/webpack -d
 ```
+```
+touch src/client/index.html
+```
+```
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>React.js using NPM, Babel6 and Webpack</title>
+  </head>
+  <body>
+    <div id="app" />
+    <script src="public/bundle.js" type="text/javascript"></script>
+  </body>
+</html>
+```
