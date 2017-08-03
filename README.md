@@ -118,3 +118,8 @@ resolve: {
 ```
 npm install --save prop-types
 ```
+```
+body, html {
+    background: url("public/images/topography.png");
+}
+```
