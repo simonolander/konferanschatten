@@ -12,7 +12,7 @@ class ChatMessages extends Component {
     this.onSubmit = this.onSubmit.bind(this)
 
     this.state = {
-      text: "",
+      text: '',
       messages: [],
       messageId: 1,
       error: undefined
@@ -22,7 +22,7 @@ class ChatMessages extends Component {
   onSubmit (event) {
     const text = this.state.text
     if (!text) {
-      this.setState({error: "Cannot post empty messages"})
+      this.setState({error: 'Cannot post empty messages'})
     }
     else {
       this.setState(oldState => ({
@@ -50,16 +50,16 @@ class ChatMessages extends Component {
           {messages.map(message => <ChatMessage key={message.id} {...message} />)}
         </ul>
         <form>
-          <FormGroup validationState={error && "error"}>
+          <FormGroup validationState={error && 'error'}>
             <InputGroup>
               <FormControl
-                className="col-md-10"
-                type="text"
+                className='col-md-10'
+                type='text'
                 value={text}
                 onChange={e => this.setState({ text: e.target.value, error: undefined })}
               />
               <InputGroup.Button>
-                <Button type="submit" onClick={this.onSubmit} >Submit</Button>
+                <Button type='submit' onClick={this.onSubmit} >Submit</Button>
               </InputGroup.Button>
             </InputGroup>
             {error && <HelpBlock>{error}</HelpBlock>}
