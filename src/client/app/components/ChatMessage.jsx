@@ -19,7 +19,7 @@ class ChatMessage extends Component {
           {/*<img width={64} height={64} src="public/images/goat.png" alt="Image"/>*/}
         {/*</Media.Left>*/}
         {/*<Media.Body>*/}
-          <Media.Heading><h5 style={style.username}>{this.props.username}<small><i> liten text</i></small></h5></Media.Heading>
+          <h6 style={style.username}>{this.props.username}<small><i> liten text</i></small></h6>
           <p style={style.text}>{this.props.text}</p>
         {/*</Media.Body>*/}
       </div>

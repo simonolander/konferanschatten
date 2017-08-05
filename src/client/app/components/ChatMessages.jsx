@@ -3,6 +3,7 @@ import ChatMessage from './ChatMessage'
 import { Button, FormControl, HelpBlock } from 'react-bootstrap'
 import FormGroup from 'react-bootstrap/es/FormGroup'
 import InputGroup from 'react-bootstrap/es/InputGroup'
+import axios from 'axios'
 
 const username = 'Simon'
 
@@ -13,13 +14,50 @@ class ChatMessages extends Component {
 
     this.onSubmit = this.onSubmit.bind(this)
     this.scrollToBottom = this.scrollToBottom.bind(this)
+    this.postMessage = this.postMessage.bind(this)
+    this.getMessages = this.getMessages.bind(this)
+    this.getLatestId = this.getLatestId.bind(this)
+    this.clearError = this.clearError.bind(this)
 
     this.state = {
       text: '',
       messages: [],
-      messageId: 1,
       error: undefined
     }
+  }
+
+  componentDidMount () {
+    this.getMessages()
+      .then(messages => this.setState({ messages }, this.scrollToBottom))
+  }
+
+  updateMessages (messages, callback) {
+    this.setState(oldState => ({ messages: oldState.messages.concat(messages) }), callback)
+  }
+
+  clearError () {
+    if (this.state.error) {
+      this.setState({ error: undefined })
+    }
+  }
+
+  getLatestId () {
+    const messages = this.state.messages
+    return messages.length
+      ? messages[messages.length - 1].id
+      : 0
+  }
+
+  getMessages (id='') {
+    return axios.get(`http://localhost:8080/rest/messages?id=${id}`)
+      .then(response => response.data)
+      .catch(console.error)
+  }
+
+  postMessage (message) {
+    return axios.post('http://localhost:8080/rest/messages', message)
+      .then(() => this.getMessages(this.getLatestId()).then(messages => this.updateMessages(messages, this.scrollToBottom)))
+      .catch(console.error)
   }
 
   scrollToBottom () {
@@ -27,30 +65,25 @@ class ChatMessages extends Component {
   }
 
   onSubmit (event) {
-    const text = this.state.text
+    const text = event.target.text.value
     if (!text) {
-      this.setState({error: 'Cannot post empty messages'})
+      !this.state.error && this.setState({error: 'Cannot post empty messages'})
     }
     else {
-      this.setState(oldState => ({
-        text: '',
-        messages: oldState.messages.concat([
-          {
-            id: oldState.messageId + 1,
-            username: username,
-            text: oldState.text,
-          }
-        ]),
-        error: undefined,
-        messageId: oldState.messageId + 1
-      }), this.scrollToBottom)
+      const message = {
+        username,
+        text
+      }
+      this.postMessage(message)
     }
 
     event.preventDefault()
+    event.target.reset()
   }
 
   render () {
-    const { messages, text, error } = this.state
+    const { messages, error } = this.state
+    console.log("Render")
 
     const messagesStyle = {
       overflowY: 'scroll',
@@ -66,17 +99,18 @@ class ChatMessages extends Component {
         <div style={messagesStyle} ref={element => this.messages = element}>
           {messages.map(message => <ChatMessage key={message.id} {...message} />)}
         </div>
-        <form>
+        <form onSubmit={this.onSubmit} >
           <FormGroup validationState={error && 'error'}>
             <InputGroup>
               <FormControl
                 className='col-md-10'
                 type='text'
-                value={text}
-                onChange={e => this.setState({ text: e.target.value, error: undefined })}
+                onChange={this.clearError}
+                name='text'
+                autoFocus
               />
               <InputGroup.Button>
-                <Button type='submit' onClick={this.onSubmit} >Submit</Button>
+                <Button type='submit' >Submit</Button>
               </InputGroup.Button>
             </InputGroup>
             {error && <HelpBlock>{error}</HelpBlock>}
