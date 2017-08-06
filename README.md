@@ -169,32 +169,43 @@ I `node_modules` ligger det en hel del bibliotek vid det här laget. Programmet 
 Vi har nu byggt projektet för första gången. Öppna `src/client/index.html`; än så länge är det bara en tom html-sida, men om du öppnar consolen så ser du utskriften från `index.jsx`.
 
 ## React
-Ingenting vi gjort hittils har egentligen med react att göra. React är bara ett bibliotek som använder sig av jsx. Låt oss skapa vår första react component.
+Ingenting vi gjort hittils har egentligen med react att göra. React är bara ett bibliotek som använder sig av jsx. Låt oss skapa vår första react-component.
 ```commandline
 npm install react react-dom prop-types --save
 ```
-Vi ska även uppdatera vår 
-
-##### index.jsx
+Vi ska även uppdatera `index.jsx`.
+###### index.jsx
 ```
-import React from 'react';
-import {render} from 'react-dom';
+import React, { Component } from 'react'
+import { render } from 'react-dom'
 
-class App extends React.Component {
+class App extends Component {
   render () {
-    return <p> Hello React!</p>;
+    return <p>Hello React!</p>
   }
 }
 
-render(<App/>, document.getElementById('app'));
+render(<App />, document.getElementById('app'))
 ```
-##### package.json
+När vi ändrar i jsx-filerna behöver vi bygga om projektet för att ändringarna ska hamna i `bundle.js`.
+Det är jobbigt att behöva skriva `./node_modules/.bin/webpack -d` varje gång vi ska bygga, så låt oss skapa två script i `package.json`
+###### package.json
+```json
+{ // ...
+  "scripts": {
+    // "test": ...
+    "dev": "webpack -d --watch",
+    "build" : "webpack -p"
+  }
+}
 ```
-"scripts": {
-  "dev": "webpack -d --watch",
-  "build" : "webpack -p"
-},
+Vi kan köra `npm run build` för att bygga projektet i production mode, `npm run dev` kör i development mode med en extra `--watch` flagga.
+`--watch` gör så att npm håller koll på när filer i projektet ändras, och bygger om projektet när det behövs. Kör
 ```
+npm run dev
+```
+Ladda om `index.html` i browsern igen, och se den nya utskriften!
+
 ```
 npm install react-bootstrap --save
 ```
