@@ -4,6 +4,7 @@ import { Button, FormControl, HelpBlock } from 'react-bootstrap'
 import FormGroup from 'react-bootstrap/es/FormGroup'
 import InputGroup from 'react-bootstrap/es/InputGroup'
 import axios from 'axios'
+import Loader from './Loader'
 
 const username = 'Simon'
 const imageUrl = 'https://s-media-cache-ak0.pinimg.com/originals/b1/bb/ec/b1bbec499a0d66e5403480e8cda1bcbe.png'
@@ -21,6 +22,7 @@ class ChatMessages extends Component {
     this.clearError = this.clearError.bind(this)
 
     this.state = {
+      loading: true,
       text: '',
       messages: [],
       error: undefined
@@ -29,7 +31,7 @@ class ChatMessages extends Component {
 
   componentDidMount () {
     this.getMessages()
-      .then(messages => this.setState({ messages }, this.scrollToBottom))
+      .then(messages => this.setState({ messages, loading: false }, this.scrollToBottom))
   }
 
   updateMessages (messages, callback) {
@@ -84,8 +86,7 @@ class ChatMessages extends Component {
   }
 
   render () {
-    const { messages, error } = this.state
-    console.log("Render")
+    const { messages, error, loading } = this.state
 
     const messagesStyle = {
       overflowY: 'scroll',
@@ -99,6 +100,7 @@ class ChatMessages extends Component {
     return (
       <div>
         <div style={messagesStyle} ref={element => this.messages = element}>
+          {loading && <Loader />}
           {messages.map(message => <ChatMessage key={message.id} {...message} />)}
         </div>
         <form onSubmit={this.onSubmit} >
@@ -109,10 +111,14 @@ class ChatMessages extends Component {
                 type='text'
                 onChange={this.clearError}
                 name='text'
+                disabled={loading}
                 autoFocus
               />
               <InputGroup.Button>
-                <Button type='submit' >Submit</Button>
+                <Button
+                  type='submit'
+                  disabled={loading}
+                >Submit</Button>
               </InputGroup.Button>
             </InputGroup>
             {error && <HelpBlock>{error}</HelpBlock>}
