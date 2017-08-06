@@ -175,7 +175,7 @@ npm install react react-dom prop-types --save
 ```
 Vi ska även uppdatera `index.jsx`.
 ###### index.jsx
-```
+```javascript
 import React, { Component } from 'react'
 import { render } from 'react-dom'
 
@@ -197,13 +197,10 @@ När vi ändrar i jsx-filerna behöver vi bygga om projektet för att ändringar
 Det är jobbigt att behöva skriva `./node_modules/.bin/webpack -d` varje gång vi ska bygga, så låt oss skapa två script i `package.json`
 ###### package.json
 ```json
-{ // ...
   "scripts": {
-    // "test": ...
     "dev": "webpack -d --watch",
     "build" : "webpack -p"
   }
-}
 ```
 Vi kan köra `npm run build` för att bygga projektet i production mode, `npm run dev` kör i development mode med en extra `--watch` flagga.
 `--watch` gör så att npm håller koll på när filer i projektet ändras, och bygger om projektet när det behövs. Kör
