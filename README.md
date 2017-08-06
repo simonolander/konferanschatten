@@ -1,7 +1,5 @@
-# Konferenschatten
-### En enkel chatapplikation i ReactJS
-I den här labben kommer vi att skapa en enkel chatapplikation från grunden.
-
+# Konferenschatten - ReactJS
+I den här labben kommer vi att skapa en enkel chatapplikation i ReactJS från grunden. Vi kommer att ladda ner de verktyg som behövs för att bygga projektet, sätta upp projektstrukturen, skriva applikationen, och koppla upp den mot ett api för att kunna chatta med de andra deltagarna.
 
 ## Innan vi startar
 
@@ -9,10 +7,10 @@ I den här labben kommer vi att skapa en enkel chatapplikation från grunden.
 [React](https://facebook.github.io/react/) är ett javascriptbibliotek för att skapa användargränssnitt. En kort beskrivning är att reactkod låter oss skriva komponenter som sköter datahantering, html-markup, eller båda två. Filerna som förknippas med react är `.jsx`. Se dem som js-filer med html-stycken. Vi kommer att skriva merparten av vår kod i `jsx` och transpilera den till javascript.
 
 ### Node Packet Manager (npm)
-Vi kommer inte att skriva all kod från grunden, utan använda oss av en del tredjepartsbibliotek. För att smidigt hämta och hantera alla bibliotek kommer vi att använda [NPM](https://www.npmjs.com/), ett open source verktyg för Node.js. NPM kommer också att hjälpa oss att sätta upp vår applikationsstruktur.
+Vi kommer inte att skriva all kod från grunden, utan använda oss av en del tredjepartsbibliotek. För att smidigt hämta och hantera alla bibliotek kommer vi att använda [NPM](https://www.npmjs.com/), ett pakethanteringsverktyg för Node.js. NPM kommer också att hjälpa oss att sätta upp vår applikationsstruktur.
 
 #### Installation
-`npm` är ett terminalverktyg som vi måste installera. Om du har `apt-get`, `brew`, `yum` eller liknande kan du hitta `npm` där. Annars kan du ladda ner den senaste versionen på https://nodejs.org. LTS räcker gott för våra ändamål.
+`npm` är ett terminalverktyg som vi måste installera. Om du har `apt-get`, `brew`, `yum` eller liknande kan du hitta `npm` där, annars kan du ladda ner den senaste versionen på https://nodejs.org. LTS räcker gott för våra ändamål.
 
 Efter installationen, kontrollera att du kan komma åt programmet från terminalen.
 ```commandline
@@ -23,6 +21,27 @@ npm --version
 node --version
 v7.4.0
 ```
+Vi kommer inte att använda `node` i det här projectet, men `npm` behöver det för att fungera. Om du har andra versionsnummer så gör det ingenting.
+
+### Konferenschatten-repot
+Det är en god idé att dra ner [repot](https://github.com/simonolander/konferenschatten) som du läser ifrån just nu, det är en färdig version av labben vi kommer att genomföra. Vi kommer att använda några bilder därifrån under labben, och du kan använda det som ett facit ifall något är fel eller saknas i det här dokumentet.
+Navigera till din favoritfolder för project
+```commandline
+cd projects
+```
+och kör 
+```
+git clone https://github.com/simonolander/konferenschatten
+```
+Alternativt kan du hämta repot som en `.zip` på https://github.com/simonolander/konferenschatten/archive/master.zip.
+
+Byt namn på foldern till `konferenschatten-complete` el.dyl. och skapa upp en folder parallellt med namnet `konferenschatten`. Du borde se
+```commandline
+ls
+konferenschatten    konferenschatten-complete
+```
+## Projektsetup
+Gå till den tomma foldern som du skapade i det förra steget, hädanefter `konferenschatten`.
 
 ```
 npm init
