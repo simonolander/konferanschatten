@@ -6,15 +6,10 @@ import { Image, Media } from 'react-bootstrap'
 
 class ChatMessage extends Component {
 
-  getColor (string) {
-    return '#' + sha1(string).substr(0, 6)
-
-  }
-
   getStyle () {
     return {
       username: {
-        color: this.getColor(this.props.username),
+        color: '#' + sha1(this.props.username).substr(0, 6),
         marginTop: '0px'
       },
       text: {
@@ -25,14 +20,6 @@ class ChatMessage extends Component {
 
   render () {
     const style = this.getStyle()
-
-    // return (
-    //   <div>
-    //     <img src="public/images/goat.png"/>
-    //     <h6 style={style.username}>{this.props.username}<small><i> {moment(this.props.timestamp).calendar()}</i></small></h6>
-    //     <p style={style.text}>{this.props.text}</p>
-    //   </div>
-    // )
 
     return (
       <Media>
@@ -54,7 +41,8 @@ ChatMessage.propTypes = {
 }
 
 ChatMessage.defaultProps = {
-  imageUrl: 'public/images/goat.png'
+  imageUrl: 'public/images/goat.png',
+  username: 'Anonymous'
 }
 
 export default ChatMessage
