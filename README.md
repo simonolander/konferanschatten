@@ -25,11 +25,7 @@ Vi kommer inte att använda `node` i det här projectet, men `npm` behöver det 
 
 ### Konferenschatten-repot
 Det är en god idé att dra ner [repot](https://github.com/simonolander/konferenschatten) som du läser ifrån just nu, det är en färdig version av labben vi kommer att genomföra. Vi kommer att använda några bilder därifrån under labben, och du kan använda det som ett facit ifall något är fel eller saknas i det här dokumentet.
-Navigera till din favoritfolder för project
-```commandline
-cd projects
-```
-och kör 
+Navigera till din favoritfolder för project och kör 
 ```
 git clone https://github.com/simonolander/konferenschatten
 ```
@@ -41,7 +37,30 @@ ls
 konferenschatten    konferenschatten-complete
 ```
 ## Projektsetup
-Gå till den tomma foldern som du skapade i det förra steget, hädanefter `konferenschatten`.
+Vi ska nu sätta upp ett nytt projekt. Gå till den tomma foldern som du skapade i det förra steget, hädanefter `konferenschatten` och kör
+```
+npm init
+```
+`npm` kommer att fråga dig om information om projektet. Du kan lämna alla fält tomma men det skadar inte att fylla i `description` och `author` om du känner för det. Det kommer att skapas en `package.json` fil i foldern med innehållet
+```json
+{
+  "name": "konferenschatten",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
+```
+
+
+
+
+
+
 
 ```
 npm init
