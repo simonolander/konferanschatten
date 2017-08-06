@@ -187,6 +187,12 @@ class App extends Component {
 
 render(<App />, document.getElementById('app'))
 ```
+Vad har vi ändrat? Vi har definierat en React-komponent med namnet `App`, som när den rendreras skriver ut en `<p>`-tag.
+Vi har två `render`: den första är en metod i `Component` som vi måste överskriva i alla våra komponenter, 
+den andra letar upp vår `<div id="app" />` i `index.html` och rendrerar en instans av `App` där. 
+`react` och `react-dom` bland importerna är några av de bibliotek som vi installerade tidigare. 
+Det kanske ser udda ut med html mitt i en javascript-funktion, men ni kommer att vänja er.
+
 När vi ändrar i jsx-filerna behöver vi bygga om projektet för att ändringarna ska hamna i `bundle.js`.
 Det är jobbigt att behöva skriva `./node_modules/.bin/webpack -d` varje gång vi ska bygga, så låt oss skapa två script i `package.json`
 ###### package.json
