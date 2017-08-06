@@ -20,6 +20,7 @@ class ChatMessages extends Component {
     this.getMessages = this.getMessages.bind(this)
     this.getLatestId = this.getLatestId.bind(this)
     this.clearError = this.clearError.bind(this)
+    this.updateMessages = this.updateMessages.bind(this)
 
     this.state = {
       loading: true,
@@ -32,6 +33,14 @@ class ChatMessages extends Component {
   componentDidMount () {
     this.getMessages()
       .then(messages => this.setState({ messages, loading: false }, this.scrollToBottom))
+      .then(() => this.updateHandler = setInterval(() => this.getMessages(this.getLatestId()).then(this.updateMessages), 1000))
+      .catch(console.error)
+  }
+
+  componentWillUnmount () {
+    if (this.updateHandler) {
+      clearInterval(this.updateHandler)
+    }
   }
 
   updateMessages (messages, callback) {
