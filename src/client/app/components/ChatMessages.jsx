@@ -6,6 +6,7 @@ import InputGroup from 'react-bootstrap/es/InputGroup'
 import axios from 'axios'
 
 const username = 'Simon'
+const imageUrl = 'https://s-media-cache-ak0.pinimg.com/originals/b1/bb/ec/b1bbec499a0d66e5403480e8cda1bcbe.png'
 
 class ChatMessages extends Component {
 
@@ -72,7 +73,8 @@ class ChatMessages extends Component {
     else {
       const message = {
         username,
-        text
+        text,
+        imageUrl
       }
       this.postMessage(message)
     }
