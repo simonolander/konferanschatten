@@ -42,11 +42,11 @@ Vi ska nu sätta upp ett nytt projekt. Gå till den tomma foldern som du skapade
 npm init
 ```
 `npm` kommer att fråga dig om information om projektet. Du kan lämna alla fält tomma men det skadar inte att fylla i `description` och `author` om du känner för det. Det kommer att skapas en `package.json` fil i foldern med innehållet
-```javascript
+```json
 {
   "name": "konferenschatten",
   "version": "1.0.0",
-  "description": "",
+  "description": "En enkel chatapplikation",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -55,9 +55,28 @@ npm init
   "license": "ISC"
 }
 ```
-
-
-
+`package.json` håller koll på projektinformation, byggscript, och dependencies. Vi kommer att uppdatera de två sistnämnda inom kort.
+Vår projectstruktur kommer att se ut som följande
+```
+.
+├── node_modules  <-- Alla våra tredjepartsbibliotek
+├── package.json  <-- Vår projektmetadata
+└── src
+    └── client
+        ├── app  <-- Vår källkod
+        ├── public  <-- Vår generade kod och våra assets
+        └── index.html
+```
+Vi tar och skapar upp `app` och `public`
+```commandline
+mkdir -p src/client/app
+mkdir -p src/client/public
+```
+Vi ska också ta och installera vårt första bibliotek: `webpack`. Om du ser varningar ang. avsaknad av `description` eller likande så kan du ignorera dem.
+```commandline
+npm install webpack --save
+```
+`webpack` är ett verktyg som paketerar våra `.jsx`-filer till en javascript-bundle som vår browser kan läsa.
 
 
 
