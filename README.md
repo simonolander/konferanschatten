@@ -42,7 +42,7 @@ Vi ska nu sätta upp ett nytt projekt. Gå till den tomma foldern som du skapade
 npm init
 ```
 `npm` kommer att fråga dig om information om projektet. Du kan lämna alla fält tomma men det skadar inte att fylla i `description` och `author` om du känner för det. Det kommer att skapas en `package.json` fil i foldern med innehållet
-```json
+```javascript
 {
   "name": "konferenschatten",
   "version": "1.0.0",
