@@ -26,7 +26,7 @@ Vi kommer inte att använda `node` i det här projectet, men `npm` behöver det 
 ### Konferenschatten-repot
 Det är en god idé att dra ner [repot](https://github.com/simonolander/konferenschatten) som du läser ifrån just nu, det är en färdig version av labben vi kommer att genomföra. Vi kommer att använda några bilder därifrån under labben, och du kan använda det som ett facit ifall något är fel eller saknas i det här dokumentet.
 Navigera till din favoritfolder för project och kör 
-```
+```commandline
 git clone https://github.com/simonolander/konferenschatten
 ```
 Alternativt kan du hämta repot som en `.zip` på https://github.com/simonolander/konferenschatten/archive/master.zip.
@@ -36,7 +36,9 @@ Byt namn på foldern till `konferenschatten-complete` el.dyl. och skapa upp en f
 ls
 konferenschatten    konferenschatten-complete
 ```
-## Projektsetup
+## Setup
+
+### Projektstruktur
 Vi ska nu sätta upp ett nytt projekt. Gå till den tomma foldern som du skapade i det förra steget, hädanefter `konferenschatten` och kör
 ```
 npm init
@@ -57,36 +59,30 @@ npm init
 ```
 `package.json` håller koll på projektinformation, byggscript, och dependencies. Vi kommer att uppdatera de två sistnämnda inom kort.
 Vår projectstruktur kommer att se ut som följande
-```
+```text
 .
 ├── node_modules  <-- Alla våra tredjepartsbibliotek
 ├── package.json  <-- Vår projektmetadata
 └── src
     └── client
         ├── app  <-- Vår källkod
-        ├── public  <-- Vår generade kod och våra assets
-        └── index.html
+        └── public  <-- Vår generade kod och våra assets
 ```
 Vi tar och skapar upp `app` och `public`
 ```commandline
 mkdir -p src/client/app
 mkdir -p src/client/public
 ```
+
+### Webpack
 Vi ska också ta och installera vårt första bibliotek: `webpack`. Om du ser varningar ang. avsaknad av `description` eller likande så kan du ignorera dem.
 ```commandline
 npm install webpack --save
 ```
-`webpack` är ett verktyg som paketerar våra `.jsx`-filer till en javascript-bundle som vår browser kan läsa.
+`webpack` är ett verktyg som paketerar våra `.jsx`-filer till en javascript-bundle som vår browser kan läsa. Den behöver också en config-fil för att fungera. Skapa upp `webpack.config.js` med innehållet
 
-
-
-
-```
-npm init
-npm install webpack --save
-touch webpack.config.js
-```
-```
+###### webpack.config.js
+```javascript
 var webpack = require('webpack');
 var path = require('path');
 
@@ -98,14 +94,66 @@ var config = {
   output: {
     path: BUILD_DIR,
     filename: 'bundle.js'
+  },
+  module: {
+    loaders: [
+      {
+        test: /\.jsx?/,
+        include: APP_DIR,
+        loader: 'babel-loader'
+      }
+    ]
+  },
+  resolve: {
+    extensions: ['.js', '.jsx'],
   }
 };
 
 module.exports = config;
 ```
+##### Kort om webpack.config.js:
+* `entry` är filen som agerar main-metod i vårt program
+* `output` är där all transpilerad kod kommer att hamna
+* `loaders.include` är foldern där webpack kommer att leta efter filer
+* `loaders.loader`: specar ifall vi vill transpilera javascript-koden ytterligare, i vårt fall m.h.a. babel
+* `resolve.extensions` specar vilka file-extensions som ska transpileras
+
+### Babel
+Vi kommer att skriva vår javascript i [Ecmascript 6](http://es6-features.org/). Anledningen är främst att es6 har en massa features som är väldigt trevliga, t.ex. moduler och pilnotationer. Dessvärre är browserstödet lite si och så, vilket betyder att vi kommer att transpilera vår javascript till es5. Detta görs under huven m.h.a. Babel. För att sätta upp babel så behöver vi installera några dependencies och skapa en config-fil.
+```commandline
+npm install babel-core babel-loader babel-preset-es2015 babel-preset-react --save
 ```
-mkdir -p src/client/app
+```commandline
+touch .babelrc
 ```
+###### .babelrc
+```json
+{
+  "presets": ["es2015", "react"]
+}
+```
+
+## Hello ReactJS!
+Vi har hittills bara sysslat med projektsetup, men nu är det dags att skriva lite kod! Vi börjar med att skapa `src/client/index.html`
+```commandline
+touch src/client/index.html
+```
+###### index.html
+```html
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Konferenschatten, R2M 2017</title>
+  </head>
+  <body>
+    <div id="app" />
+    <script src="public/bundle.js" type="text/javascript"></script>
+  </body>
+</html>
+```
+
+
+
 ```
 touch src/client/app/index.jsx
 ```
@@ -114,47 +162,6 @@ console.log("Hello JSX")
 ```
 ```
 ./node_modules/.bin/webpack -d
-```
-```
-touch src/client/index.html
-```
-```
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>React.js using NPM, Babel6 and Webpack</title>
-  </head>
-  <body>
-    <div id="app" />
-    <script src="public/bundle.js" type="text/javascript"></script>
-  </body>
-</html>
-```
-```
-npm install babel-core babel-loader babel-preset-es2015 babel-preset-react --save
-```
-```
-touch .babelrc
-
-{
-  "presets": ["es2015", "react"]
-}
-```
-##### webpack.config.js
-```
-// Existing Code ....
-var config = {
-  // Existing Code ....
-  module : {
-    loaders : [
-      {
-        test : /\.jsx?/,
-        include : APP_DIR,
-        loader : 'babel'
-      }
-    ]
-  }
-}
 ```
 ```
 npm install react react-dom --save
