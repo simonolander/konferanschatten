@@ -44,6 +44,7 @@ Vi ska nu sätta upp ett nytt projekt. Gå till den tomma foldern som du skapade
 npm init
 ```
 `npm` kommer att fråga dig om information om projektet. Du kan lämna alla fält tomma men det skadar inte att fylla i `description` och `author` om du känner för det. Det kommer att skapas en `package.json` fil i foldern med innehållet
+###### package.json
 ```json
 {
   "name": "konferenschatten",
@@ -133,7 +134,7 @@ touch .babelrc
 }
 ```
 
-## Hello ReactJS!
+## Hello JSX!
 Vi har hittills bara sysslat med projektsetup, men nu är det dags att skriva lite kod! Vi börjar med att skapa `src/client/index.html`
 ```commandline
 touch src/client/index.html
@@ -151,21 +152,29 @@ touch src/client/index.html
   </body>
 </html>
 ```
-
-
-
-```
+Inte så mycket kod, eller hur? Hela appen kommer så småningom rendreras av `bundle.js` som vi inte genererat än. För att generera den behöver vi skapa `index.jsx` som vi pekade ut i `package.json` tidigare.
+```commandline
 touch src/client/app/index.jsx
 ```
+###### index.jsx
+```javascript
+console.log("Hello JSX!")
 ```
-console.log("Hello JSX")
-```
+`index.jsx` är den fil som agerar entrypoint i applikationen, och nu när den existerar kan vi äntligen bygga projektet.
+
+I `node_modules` ligger det en hel del bibliotek vid det här laget. Programmet som bygger vår applikation är `node_modules/.bin/webpack`. Låt oss köra den i development mode.
 ```
 ./node_modules/.bin/webpack -d
 ```
+Vi har nu byggt projektet för första gången. Öppna `src/client/index.html`; än så länge är det bara en tom html-sida, men om du öppnar consolen så ser du utskriften från `index.jsx`.
+
+## React
+Ingenting vi gjort hittils har egentligen med react att göra. React är bara ett bibliotek som använder sig av jsx. Låt oss skapa vår första react component.
+```commandline
+npm install react react-dom prop-types --save
 ```
-npm install react react-dom --save
-```
+Vi ska även uppdatera vår 
+
 ##### index.jsx
 ```
 import React from 'react';
