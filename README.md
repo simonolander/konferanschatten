@@ -320,7 +320,7 @@ class MessageInput extends Component {
   render () {
     return (
       <form>
-        <input />
+        <input name='text'/>
         <button>Skicka</button>
       </form>
     )
@@ -330,8 +330,12 @@ class MessageInput extends Component {
 Ladda om appen, det borde se ut något så här
 ###### Simpelt inputfält
 ![](https://github.com/simonolander/konferenschatten/blob/master/screenshots/simple-input.png "Simpelt inputfält")
+Om du leker runt med inputfältet märker du att det inte gör så mycket: sidan laddas om och meddelandet försvinner.
+Vi behöver kommunicera meddelandet till `App` och hindra att sidan uppdateras.
 
-
+Ett vanligt sätt att kommunicera från en komponent till en förälder är att föräldern skickar en metodreferens till barnet.
+Information som skickas från en förälder till ett barn kallas *Properties* och finns i variabeln `this.props` i barnet. 
+`name` i `input` är ett exempel på en *property*.
 
 ```
 npm install react-bootstrap --save
