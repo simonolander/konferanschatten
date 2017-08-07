@@ -242,6 +242,69 @@ App
 └── MessageInput
 ```
 Jag gillar att ha alla komponenter samlade under en egen folder. Vi börjar med att skapa filerna.
+```commandline
+mkdir src/client/app/components
+touch src/client/app/components/MessageList.jsx
+touch src/client/app/components/Message.jsx
+touch src/client/app/components/MessageInput.jsx
+```
+###### MessageList
+```jsx harmony
+import React, { Component } from 'react'
+
+class MessageList extends Component {
+
+  render () {
+    return <div></div>
+  }
+}
+
+export default MessageList
+```
+###### Message
+```jsx harmony
+import React, { Component } from 'react'
+
+class Message extends Component {
+
+  render () {
+    return <div></div>
+  }
+}
+
+export default Message
+```
+###### MessageInput
+```jsx harmony
+import React, { Component } from 'react'
+
+class MessageInput extends Component {
+
+  render () {
+    return <div></div>
+  }
+}
+
+export default MessageInput
+```
+Vi ändrar dessutom `index.jsx` så att den ritar upp första lagret i hierarkin
+```jsx harmony
+// ...
+import MessageList from './components/MessageList'
+import MessageInput from './components/MessageInput'
+
+class App extends Component {
+  render () {
+    return (
+      <div>
+        <MessageList></MessageList>
+        <MessageInput></MessageInput>
+      </div>
+    )
+  }
+}
+// ...
+```
 
 
 ```
