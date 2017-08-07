@@ -195,7 +195,7 @@ Det kanske ser udda ut med html mitt i en javascript-funktion, men ni kommer att
 
 När vi ändrar i jsx-filerna behöver vi bygga om projektet för att ändringarna ska hamna i `bundle.js`.
 Det är jobbigt att behöva skriva `./node_modules/.bin/webpack -d` varje gång vi ska bygga, så låt oss skapa två script i `package.json`
-###### package.json additions
+###### package.json tillägg
 ```json
 "scripts": {
   "dev": "webpack -d --watch",
@@ -288,6 +288,7 @@ class MessageInput extends Component {
 export default MessageInput
 ```
 Vi ändrar dessutom `index.jsx` så att den ritar upp första lagret i hierarkin
+###### index.jsx tillägg
 ```jsx harmony
 // ...
 import MessageList from './components/MessageList'
@@ -305,6 +306,29 @@ class App extends Component {
 }
 // ...
 ```
+`export` längst ner i filerna gör så att vi kan importera klasserna i andra komponenter.
+
+Kommunikationen mellan komponenterna kommer ske enligt följande
+1. `MessageInput` tar emot dina meddelanden och kommunicerar dem till `App`
+2. `App` håller koll på en lista med meddelanden som den skickar till `MessageList`
+3. `MessageList` tar alla meddelanden och skapar upp ett `Message` för varje meddelande
+
+Vi börjar med `MessageInput`
+```jsx harmony
+class MessageInput extends Component {
+
+  render () {
+    return (
+      <form>
+        <input />
+        <button>Skicka</button>
+      </form>
+    )
+  }
+}
+```
+
+
 
 
 ```
