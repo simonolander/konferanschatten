@@ -207,7 +207,28 @@ Vi kan köra `npm run build` för att bygga projektet i production mode, `npm ru
 ```
 npm run dev
 ```
-Ladda om `index.html` i browsern igen, och se den nya utskriften!
+Ladda om `index.html` i browsern igen, och se den nya `<p>`-tagen med vårt meddelande!
+
+
+## Komponenter
+En React-applikation består av en samling komponenter. 
+En komponent är en logiskt hyffsat isolerad del av vår applikation som sköter sin egen rendrering,
+och varje komponent kan i sin tur innehålla en eller flera komponenter.
+
+Alla applikationer kan i teorin skrivas med bara en komponent, precis som att alla program kan skrivas i en funktion, 
+men det finns en del fördelar med en smart komponentuppdelning.
+
+* Större läsbarhet av kod
+* Lättare utveckling
+* Återanvändning av komponenter
+* Bättre kontroll över omrendrering vid ändring av data
+
+För många eller dumt valda uppdelningar gör dock att kommunikation mellan komponenter blir svårare.  
+
+###### Exempel på en ganska vettig komponentuppdelning
+![Alternativ text](http://coenraets.org/blog/wp-content/uploads/2014/12/uimockscript.png "Exempel på Komponenter")
+
+
 
 ```
 npm install react-bootstrap --save
