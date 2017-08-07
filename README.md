@@ -327,7 +327,9 @@ class MessageInput extends Component {
   }
 }
 ```
-
+Ladda om appen, det borde se ut något så här
+###### Simpelt inputfält
+![](https://github.com/simonolander/konferenschatten/blob/master/screenshots/simple-input.png "Simpelt inputfält")
 
 
 
