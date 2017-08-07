@@ -226,8 +226,22 @@ men det finns en del fördelar med en smart komponentuppdelning.
 För många eller dumt valda uppdelningar gör dock att kommunikation mellan komponenter blir svårare.  
 
 ###### Exempel på en ganska vettig komponentuppdelning
-![Alternativ text](http://coenraets.org/blog/wp-content/uploads/2014/12/uimockscript.png "Exempel på Komponenter")
+![Exempel på Komponenter](http://coenraets.org/blog/wp-content/uploads/2014/12/uimockscript.png "Exempel på Komponenter")
 
+### Vad behöver vi för komponenter i en chat-applikation?
+Vår applikation är inte jättekomplicerad. 
+Vi behöver kunna lista meddelanden och skriva nya meddelanden. Varje meddelande borde dessutom kunna visa upp data på ett juste sätt.
+
+###### Förslag på struktur
+```text
+App
+├── MessageList
+│   ├── Message
+│   ├── Message
+│   └── ...
+└── MessageInput
+```
+Jag gillar att ha alla komponenter samlade under en egen folder. Vi börjar med att skapa filerna.
 
 
 ```
