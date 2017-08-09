@@ -298,8 +298,8 @@ class App extends Component {
   render () {
     return (
       <div>
-        <MessageList></MessageList>
-        <MessageInput></MessageInput>
+        <MessageList/>
+        <MessageInput/>
       </div>
     )
   }
@@ -334,8 +334,70 @@ Om du leker runt med inputfältet märker du att det inte gör så mycket: sidan
 Vi behöver kommunicera meddelandet till `App` och hindra att sidan uppdateras.
 
 Ett vanligt sätt att kommunicera från en komponent till en förälder är att föräldern skickar en metodreferens till barnet.
-Information som skickas från en förälder till ett barn kallas *Properties* och finns i variabeln `this.props` i barnet. 
+Information som skickas från en förälder till ett barn kallas *properties* och finns i variabeln `this.props` i barnet. 
 `name` i `input` är ett exempel på en *property*.
+
+Låt oss ändra våra komponenter så att `MessageInput` kan skicka meddelanden till `MessageList`.
+
+###### index.jsx
+```jsx harmony
+class App extends Component {
+
+  postMessage (text) {
+    console.log(`Meddelande från MessageInput: ${text}`)
+  }
+
+  render () {
+    return (
+      <div>
+        <MessageList />
+        <MessageInput 
+          onSubmit={this.postMessage.bind(this)}
+        />
+      </div>
+    )
+  }
+}
+```
+Vad är ändrat?
+1. Vi har skapat en metod `postMessage(text)` som vi vill ska köras när `MessageInput` submit:ar ett nytt meddelande.
+2. Vi skickar med en referens till `postMessage` till `MessageInput` när vi instantierar classen.
+`MessageInput` kommer att ha en referens till `postMessage` i `this.props.onSubmit`.
+3. `this.postMessage.bind(this)` gör så att vi kan använda `this` i `postMessage`-referensen. 
+
+###### MessageInput.jsx
+```jsx harmony
+class MessageInput extends Component {
+
+  onSubmit (event) {
+    const text = event.target.text.value
+    event.preventDefault()
+    event.target.reset()
+
+    this.props.onSubmit(text)
+  }
+
+  render () {
+    return (
+      <form onSubmit={this.onSubmit.bind(this)}>
+        <input name='text'/>
+        <button>Skicka</button>
+      </form>
+    )
+  }
+}
+```
+Vad har ändrats?
+1. `event.target.text.value` är värdet i vårt text-input vid eventet.
+2. `event.preventDefault()` hindrar formuläret från att uppdatera sidan.
+3. `event.target.reset()` återställer alla input-fält i formuläret.
+4. `this.props.onSubmit(text)` kallar på metoden som skickades in av `App`.
+5. `<form onSubmit(...)` låter formuläret veta vilken metod den ska anropa vid en submit. 
+
+
+
+
+
 
 ```
 npm install react-bootstrap --save

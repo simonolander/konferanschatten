@@ -4,11 +4,18 @@ import MessageList from './components/MessageList'
 import MessageInput from './components/MessageInput'
 
 class App extends Component {
+
+  postMessage (text) {
+    console.log(`Meddelande från MessageInput: ${text}`)
+  }
+
   render () {
     return (
       <div>
-        <MessageList></MessageList>
-        <MessageInput></MessageInput>
+        <MessageList />
+        <MessageInput
+          onSubmit={this.postMessage.bind(this)}
+        />
       </div>
     )
   }
