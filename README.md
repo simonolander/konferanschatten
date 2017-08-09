@@ -483,6 +483,16 @@ Vad har ändrats?
 
 Ladda om appen och att alla meddelanden rendreras.
 
+###### Lista med meddelanden
+![](https://github.com/simonolander/konferenschatten/blob/master/screenshots/ul-list-render.png.png "Men det ser ganska trist ut fortfarande")
+
+Du har kanske märkt att du får varningar i konsollen.
+Det beror på att vi har genererat en rad `<li>`-element utan att förse dem med en unik `key`, eller någon nyckel alls för den delen.
+Du kan ignorera varningen för stunden.
+###### Varning: Unique key
+![](https://github.com/simonolander/konferenschatten/blob/master/screenshots/warning-key-prop.png "Vi kommer att lösa det här så småning om")
+
+
 
 
 
