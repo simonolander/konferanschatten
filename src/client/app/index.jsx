@@ -20,10 +20,11 @@ class App extends Component {
   }
 
   render () {
-    console.log(this.state.messages)
     return (
       <div>
-        <MessageList/>
+        <MessageList
+          messages={this.state.messages}
+        />
         <MessageInput
           onSubmit={this.postMessage.bind(this)}
         />

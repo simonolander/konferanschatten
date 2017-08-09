@@ -3,7 +3,11 @@ import React, { Component } from 'react'
 class MessageList extends Component {
 
   render () {
-    return <div></div>
+    return (
+      <ul>
+        {this.props.messages.map(text => <li>{text}</li>)}
+      </ul>
+    )
   }
 }
 

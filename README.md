@@ -444,6 +444,46 @@ Vad har ändrats?
 
 Ladda om sidan och se att `messages` växer vid varje anrop!
 
+### Rendrering av messages
+Vi vill inte rendrera våra meddelanden i `App`; det ska skötas av `MessageList`. 
+Således måste vi skicka listan till `MessageList` via `props` under rendreringen.
+
+###### index.jsx
+```jsx harmony
+  render () {
+    return (
+      <div>
+        <MessageList
+          messages={this.state.messages}
+        />
+        <MessageInput
+          onSubmit={this.postMessage.bind(this)}
+        />
+      </div>
+    )
+  }
+```
+
+###### MessageList.jsx
+```jsx harmony
+class MessageList extends Component {
+
+  render () {
+    return (
+      <ul>
+        {this.props.messages.map(text => <li>{text}</li>)}
+      </ul>
+    )
+  }
+}
+```
+Vad har ändrats?
+1. Vi skickar med `this.state.messages` som en *property* till `MessageList`, och tog i samma veva bort konsollutskriften.
+2. I `MessageList` så rendrerar vi en `<ul>`-tag med en `<li>` för varje meddelande i `this.props.messages`.
+
+Ladda om appen och att alla meddelanden rendreras.
+
+
 
 
 ```
