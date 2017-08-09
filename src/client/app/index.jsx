@@ -5,14 +5,25 @@ import MessageInput from './components/MessageInput'
 
 class App extends Component {
 
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      messages: []
+    }
+  }
+
   postMessage (text) {
-    console.log(`Meddelande från MessageInput: ${text}`)
+    this.setState({
+      messages: this.state.messages.concat(text)
+    })
   }
 
   render () {
+    console.log(this.state.messages)
     return (
       <div>
-        <MessageList />
+        <MessageList/>
         <MessageInput
           onSubmit={this.postMessage.bind(this)}
         />

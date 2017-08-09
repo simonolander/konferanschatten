@@ -313,7 +313,8 @@ Kommunikationen mellan komponenterna kommer ske enligt följande
 2. `App` håller koll på en lista med meddelanden som den skickar till `MessageList`
 3. `MessageList` tar alla meddelanden och skapar upp ett `Message` för varje meddelande
 
-Vi börjar med `MessageInput`
+### `props` och hur vi kommunicerar mellan komponenter
+För att kunna skriva meddelanden `MessageInput` behöver vi bygga ut den lite
 ```jsx harmony
 class MessageInput extends Component {
 
@@ -394,8 +395,54 @@ Vad har ändrats?
 4. `this.props.onSubmit(text)` kallar på metoden som skickades in av `App`.
 5. `<form onSubmit(...)` låter formuläret veta vilken metod den ska anropa vid en submit. 
 
+Ladda om sidan och se att vi får nya utskrifter!
 
+### `state` och hur vi sparar meddelanden
+Just nu så gör vi inte så mycket med våra meddelanden; vi skriver ut dem i konsollen och glömmer dem. 
+Vi skulle behöva spara en historik av vad som skrivits. Komponenter har två huvudsätt att hålla information:
+1. `props` som vi gått igenom är information som komponenten får från sin förälder
+2. `state` används för information som komponenten själv förvaltar
 
+Ändringar i antingen `props` eller `state` triggar en omrendrering av komponenten.
+
+###### index.jsx
+```jsx harmony
+class App extends Component {
+
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      messages: []
+    }
+  }
+
+  postMessage (text) {
+    this.setState({
+      messages: this.state.messages.concat(text)
+    })
+  }
+
+  render () {
+    console.log(this.state.messages)
+    return (
+      <div>
+        <MessageList/>
+        <MessageInput
+          onSubmit={this.postMessage.bind(this)}
+        />
+      </div>
+    )
+  }
+}
+```
+Vad har ändrats?
+1. Vi har skapat en `constructor` som körs när komponenten skapas för första gången.
+2. I `constructor` initierar vi `state` med en tom lista `state.messages`.
+3. I `postMessage` lägger vi på `text` på `this.state.messages` och sparar det i state via `setState`.
+4. I `render` logger vi vad det finns för messages i `state`.
+
+Ladda om sidan och se att `messages` växer vid varje anrop!
 
 
 
