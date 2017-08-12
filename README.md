@@ -492,20 +492,58 @@ Du kan ignorera varningen för stunden.
 ###### Varning: Unique key
 ![](https://github.com/simonolander/konferenschatten/blob/master/screenshots/warning-key-prop.png "Vi kommer att lösa det här så småning om")
 
-
-
-
-
+### Utsidan räknas
+Hittills har vi bara byggt funktionalitet och vår applikation ser ganska spartansk ut. Låt oss ändra på det. 
+[Bootstrap](https://react-bootstrap.github.io/getting-started.html) är ett javascipt/css-bibliotek med stöd för React.
+###### Installera `react-bootstrap`
 ```
 npm install react-bootstrap --save
 ```
-##### index.html
+Vi behöver även lägga till tre css-filer i vår `index.html` och sätta `className` på de taggar som vi vill snygga upp.
+###### index.html
+```html
+<meta charset="utf-8">
+  <title>Konferenschatten, R2M 2017</title>
+
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap-theme.min.css">
+  <!-- Vår custom css -->
+  <link rel="stylesheet" href="public/css/main.css">
+</head>
 ```
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap-theme.min.css">
+###### index.jsx
+```jsx harmony
+<div className='app row'>
+  <div className='col-xs-6 col-xs-offset-3'>
+    <MessageList
+      messages={this.state.messages}
+    />
+    <MessageInput
+      onSubmit={this.postMessage.bind(this)}
+    />
+  </div>
+</div>
 ```
+###### MessageList.jsx
+```jsx harmony
+<div className='message-list'>
+  {this.props.messages.map(text => <li>{text}</li>)}
+</div>
+```
+På https://react-bootstrap.github.io/components.html hittar vi exempel på deras komponenter och hur vi kan använda dem. 
+
+
+
+
+
+
+
+
+
+
+
 ##### webpack.config.js
 ```
 resolve: {

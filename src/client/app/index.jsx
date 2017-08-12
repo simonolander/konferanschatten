@@ -21,13 +21,15 @@ class App extends Component {
 
   render () {
     return (
-      <div>
-        <MessageList
-          messages={this.state.messages}
-        />
-        <MessageInput
-          onSubmit={this.postMessage.bind(this)}
-        />
+      <div className='app row'>
+        <div className='col-xs-6 col-xs-offset-3'>
+          <MessageList
+            messages={this.state.messages}
+          />
+          <MessageInput
+            onSubmit={this.postMessage.bind(this)}
+          />
+        </div>
       </div>
     )
   }

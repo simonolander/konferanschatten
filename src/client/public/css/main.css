@@ -1,0 +1,15 @@
+.app {
+    /*background: url("https://r2m.se/app/uploads/2017/03/AndersMagnus-1200x900.jpg");*/
+    /*background: url("../images/topography.png");*/
+    background: url("../images/ronda-malaga.jpg");
+    /*background-size: cover;*/
+    background-position: center;
+    height: 100%;
+    padding: 10px;
+}
+
+.message-list {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    padding: 10px;
+}

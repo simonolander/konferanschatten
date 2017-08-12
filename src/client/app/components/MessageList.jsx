@@ -4,9 +4,9 @@ class MessageList extends Component {
 
   render () {
     return (
-      <ul>
+      <div className='message-list'>
         {this.props.messages.map(text => <li>{text}</li>)}
-      </ul>
+      </div>
     )
   }
 }
