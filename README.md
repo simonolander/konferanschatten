@@ -726,7 +726,7 @@ Vad har ändrats?
 
 Ladda om appen och se hur det ser ut.
 ###### Simpelt inputfält
-![](https://github.com/simonolander/konferenschatten/blob/master/screenshots/image-and-screenshot.png "Det börjar ta sig, eller hur?")
+![](https://github.com/simonolander/konferenschatten/blob/master/screenshots/image-and-timestampg.png "Det börjar ta sig, eller hur?")
 
 
 ##### webpack.config.js
