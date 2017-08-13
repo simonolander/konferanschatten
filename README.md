@@ -579,7 +579,7 @@ I Bootstrap finns det en komponent vid namn `Media` som passar våra ändamål
 
 ###### Message.jsx
 ```jsx harmony
-import React, { Component, PropTypes } from 'react'
+import PropTypes from 'prop-types'
 import { Media } from 'react-bootstrap'
 
 class Message extends Component {
@@ -608,16 +608,70 @@ Message.defaultProps = {
 
 Vad har ändrats?
 1. Vi har importerat `Media` från `react-bootstrap` och använt dess komponenter för att rita upp vårt meddelande.
-2. Vi har definierat en ny prop, `username`, där vi kan skriva vem som skrev meddelandet.
-3. Vi har specat två statiska variabler `propTypes` och `defaultProps` på vår klass.
+2. Vi har importerat `PropTypes` från `prop-types` för att kunna speca vilka props vi förväntar oss.
+3. Vi har definierat en ny prop, `username`, där vi kan skriva vem som skrev meddelandet.
+4. Vi har specat två statiska variabler `propTypes` och `defaultProps` på vår klass.
    1. `propTypes` låter oss berätta vilka `props` som en komponent förväntar sig, vilka typer de har, och huruvida de är required. 
    Om en required prop saknas under runtime så genereras en varning.
    2. `defaultProps` låter oss definiera default-värden för våra props, ifall de inte är satta av föräldern.
 
-###
+### `username`
+Vi har gjort så att `Message` ritar upp `username` om det kommer in från props, men inte skickat in något än.
+`username` är en del av ett meddelande, så vi borde pakettera både `text` och `username` i samma objekt.
 
+###### index.jsx
+```jsx harmony
+postMessage (text) {
+  const message = {
+    text: text,
+    username: 'Simon'
+  }
+  
+  this.setState({
+    messages: this.state.messages.concat(message)
+  })
+}
+```
+Vad har ändrats?
+1. Istället för att spara `messages` som en lista med strängar sparar vi dem som objekt med flera värden.
+2. Vi har defaultat `username` till något hårdkodat värde tills vidare.
 
+###### MessageList.jsx
+```jsx harmony
+import PropTypes from 'prop-types'
+import Message from './Message'
 
+class MessageList extends Component {
+
+  render () {
+    return (
+      <div className='message-list'>
+        {this.props.messages.map(message => <Message {...message} />)}
+      </div>
+    )
+  }
+}
+
+MessageList.propTypes = {
+  messages: PropTypes.array
+}
+
+MessageList.defaultProps = {
+  messages: []
+}
+```
+Vad har ändrats?
+1. Vi har ändrat så att `messages` innehåller message-objekt istället för bara text.
+`{...message}` är es6 och låter oss packa upp ett objekt och skicka dess innehåll som separata props.
+2. Vi har specat `propTypes` för den här klassen också.
+
+### Fler saker i meddelandet
+Vad vill man ha i meddelandet förutom text och användarnamn? Tidpunkt för meddelandet och en bild på användaren kanske.
+Låt oss lägga till det i `Message.jsx`.
+
+```jsx harmony
+
+```
 
 
 

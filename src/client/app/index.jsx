@@ -14,8 +14,13 @@ class App extends Component {
   }
 
   postMessage (text) {
+    const message = {
+      text: text,
+      username: 'Simon'
+    }
+
     this.setState({
-      messages: this.state.messages.concat(text)
+      messages: this.state.messages.concat(message)
     })
   }
 
