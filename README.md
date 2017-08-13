@@ -728,7 +728,81 @@ Ladda om appen och se hur det ser ut.
 ###### Bild och timestamp
 ![](https://github.com/simonolander/konferenschatten/blob/master/screenshots/image-and-timestamp.png "Det börjar ta sig, eller hur?")
 
+### Online
+Det är inte mycket av en chat om man bara pratar med sig själv. I nästa steg ska vi koppla ihop appen med en server.
+För att sköta kommunikationen smidigt kommer vi att använda ett bibliotek som heter [Axios](https://github.com/mzabriskie/axios).
+```commandline
+npm install axios --save
+```
+När vi laddar sidan vill vi hämta alla meddelanden från servern, när vi skapar ett meddelande vill vi skicka det till servern,
+och vi vill periodiskt hämta alla nya meddelanden från servern.
 
+Vi börjar med att hämta och skicka.
+```jsx harmony
+import axios from 'axios'
+
+const url = 'http://ec2-54-201-62-210.us-west-2.compute.amazonaws.com:8080/rest/messages'
+
+class App extends Component {
+
+  constructor (props) {
+    super(props)
+    
+    this.loadMessages = this.loadMessages.bind(this)
+
+    this.state = {
+      messages: []
+    }
+  }
+
+  componentDidMount () {
+    this.loadMessages()
+  }
+
+  loadMessages () {
+    axios.get(url)
+      .then(response => response.data)
+      .then(messages => this.setState({messages}))
+      .catch(console.error)
+  }
+
+  postMessage (text) {
+    const message = {
+      text: text,
+      username: 'Simon'
+    }
+
+    axios.post(url, message)
+      .then(response => response.data)
+      .then(this.loadMessages)
+      .catch(console.error)
+  }
+
+  render () {
+    return (
+      <div className='app row'>
+        <div className='col-xs-6 col-xs-offset-3'>
+          <MessageList
+            messages={this.state.messages}
+          />
+          <MessageInput
+            onSubmit={this.postMessage.bind(this)}
+          />
+        </div>
+      </div>
+    )
+  }
+}
+```
+Vad har ändrats?
+1. Vi har importerat `axios` från `axios`. Paketet låter oss enkelt göra rest-anrop till vår server.
+2. Vi har specat en `url` variable med addressen till vår server.
+3. Vi har skapat en ny metod `loadMessages` som hämtar alla meddelanden från servern och sparar dem i `state`.
+Vi har även `bind`at den i konstruktorn, så att vi slipper göra det varje gång den anropas.
+4. Vi har ändrat `postMessage` så att den skickar meddelandet till servern, och sedan hämtar alla nya meddelanden.
+5. Vi har implementerat `componentDidMount` som körs efter första rendreringen av vår komponent.
+
+Ladda om sidan och se att ni kan chatta med varandra! Och var varsamma med servern!
 ##### webpack.config.js
 ```
 resolve: {

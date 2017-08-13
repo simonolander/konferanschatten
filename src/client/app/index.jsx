@@ -2,27 +2,44 @@ import React, { Component } from 'react'
 import { render } from 'react-dom'
 import MessageList from './components/MessageList'
 import MessageInput from './components/MessageInput'
+import axios from 'axios'
+
+const url = 'http://ec2-54-201-62-210.us-west-2.compute.amazonaws.com:8080/rest/messages'
+// const url = 'http://localhost:8080/rest/messages'
 
 class App extends Component {
 
   constructor (props) {
     super(props)
+    
+    this.loadMessages = this.loadMessages.bind(this)
 
     this.state = {
       messages: []
     }
   }
 
+  componentDidMount () {
+    this.loadMessages()
+  }
+
+  loadMessages () {
+    axios.get(url)
+      .then(response => response.data)
+      .then(messages => this.setState({messages}))
+      .catch(console.error)
+  }
+
   postMessage (text) {
     const message = {
       text: text,
-      username: 'Simon',
-      timestamp: + new Date()
+      username: 'Simon'
     }
 
-    this.setState({
-      messages: this.state.messages.concat(message)
-    })
+    axios.post(url, message)
+      .then(response => response.data)
+      .then(this.loadMessages)
+      .catch(console.error)
   }
 
   render () {
