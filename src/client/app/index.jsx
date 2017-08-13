@@ -13,6 +13,7 @@ class App extends Component {
     super(props)
     
     this.loadMessages = this.loadMessages.bind(this)
+    this.loadLatestMessages = this.loadLatestMessages.bind(this)
 
     this.state = {
       messages: []
@@ -21,12 +22,34 @@ class App extends Component {
 
   componentDidMount () {
     this.loadMessages()
+    this.messageRefreshHandler = setInterval(this.loadLatestMessages, 10000)
+  }
+
+  componentWillUnmount () {
+    if (this.messageRefreshHandler) {
+      clearInterval(this.messageRefreshHandler)
+    }
   }
 
   loadMessages () {
     axios.get(url)
       .then(response => response.data)
       .then(messages => this.setState({messages}))
+      .catch(console.error)
+  }
+
+  loadLatestMessages () {
+    const { messages } = this.state
+    const length = messages.length
+    const latestId = length
+      ? messages[length - 1].id
+      : 0
+
+    axios.get(`${url}?id=${latestId}`)
+      .then(response => response.data)
+      .then(messages => messages.length && this.setState(oldState => ({
+        messages: oldState.messages.concat(messages)
+      })))
       .catch(console.error)
   }
 
@@ -38,7 +61,7 @@ class App extends Component {
 
     axios.post(url, message)
       .then(response => response.data)
-      .then(this.loadMessages)
+      .then(this.loadLatestMessages)
       .catch(console.error)
   }
 

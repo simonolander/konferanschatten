@@ -801,8 +801,99 @@ Vad har ändrats?
 Vi har även `bind`at den i konstruktorn, så att vi slipper göra det varje gång den anropas.
 4. Vi har ändrat `postMessage` så att den skickar meddelandet till servern, och sedan hämtar alla nya meddelanden.
 5. Vi har implementerat `componentDidMount` som körs efter första rendreringen av vår komponent.
+Den sköter hämtningen av alla meddelanden första gången.
 
 Ladda om sidan och se att ni kan chatta med varandra! Och var varsamma med servern!
+
+Vi ska också se till att det sker en löpande hämtning av nya meddelanden. 
+Det sker genom att vi berättar för servern vilket vårt senaste meddelande id är, 
+så att servern bara behöva skicka meddelanden som dykt upp efteråt.
+```jsx harmony
+class App extends Component {
+
+  constructor (props) {
+    super(props)
+    
+    this.loadMessages = this.loadMessages.bind(this)
+    this.loadLatestMessages = this.loadLatestMessages.bind(this)
+
+    this.state = {
+      messages: []
+    }
+  }
+
+  componentDidMount () {
+    this.loadMessages()
+    this.messageRefreshHandler = setInterval(this.loadLatestMessages, 3000)
+  }
+
+  componentWillUnmount () {
+    if (this.messageRefreshHandler) {
+      clearInterval(this.messageRefreshHandler)
+    }
+  }
+
+  loadMessages () {
+    axios.get(url)
+      .then(response => response.data)
+      .then(messages => this.setState({messages}))
+      .catch(console.error)
+  }
+
+  loadLatestMessages () {
+    const { messages } = this.state
+    const length = messages.length
+    const latestId = length
+      ? messages[length - 1].id
+      : 0
+
+    axios.get(`${url}?id=${latestId}`)
+      .then(response => response.data)
+      .then(messages => messages.length && this.setState(oldState => ({
+        messages: oldState.messages.concat(messages)
+      })))
+      .catch(console.error)
+  }
+
+  postMessage (text) {
+    const message = {
+      text: text,
+      username: 'Simon'
+    }
+
+    axios.post(url, message)
+      .then(response => response.data)
+      .then(this.loadLatestMessages)
+      .catch(console.error)
+  }
+
+  render () {
+    return (
+      <div className='app row'>
+        <div className='col-xs-6 col-xs-offset-3'>
+          <MessageList
+            messages={this.state.messages}
+          />
+          <MessageInput
+            onSubmit={this.postMessage.bind(this)}
+          />
+        </div>
+      </div>
+    )
+  }
+}
+```
+Vad har ändrats?
+1. Vi har skapat en ny metod `loadLatestMessages` som frågar servern efter de meddelanden efter ett visst id.
+Här ser vi en ny typ av `setState` som tar en funktion istället för ett nytt state.
+I funktionen får vi det gamla statet, vilket är bra om vi har många trådar som sätter state.
+På så vis kan vi undvika race conditions.
+2. I `componentDidMount` så kallar vi på `setInterval` med vår metod och den frekvens vi vill ha.
+Den kommer anropa metoden med jämna mellanrum, och skickar tillbaka en referens till "tråden".
+3. `componentWillUnmount` är en annan livscykelmetod i react som körs när komponenten plockas bort.
+4. Vi har ändrat `postMessage` så att den också använder `getLatestMessages`.
+
+
 ##### webpack.config.js
 ```
 resolve: {
