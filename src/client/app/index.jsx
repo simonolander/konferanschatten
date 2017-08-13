@@ -16,7 +16,8 @@ class App extends Component {
   postMessage (text) {
     const message = {
       text: text,
-      username: 'Simon'
+      username: 'Simon',
+      timestamp: + new Date()
     }
 
     this.setState({

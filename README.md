@@ -667,12 +667,62 @@ Vad har ändrats?
 
 ### Fler saker i meddelandet
 Vad vill man ha i meddelandet förutom text och användarnamn? Tidpunkt för meddelandet och en bild på användaren kanske.
-Låt oss lägga till det i `Message.jsx`.
+Låt oss lägga till det i `index.jsx` och `Message.jsx`.
 
+###### index.jsx
 ```jsx harmony
-
+const message = {
+  text: text,
+  username: 'Simon',
+  timestamp: + new Date()
+}
 ```
+Vad har ändrats?
+1. Vi har lagt till `timestamp` i message-objektet, det plockas lättast ut i javascript genom `+ new Date()`.
 
+###### Message.jsx
+```jsx harmony
+import { Image, Media } from 'react-bootstrap'
+
+class Message extends Component {
+
+  render () {
+    return (
+      <Media className='message'>
+        <Media.Left>
+          <Image
+            width={56}
+            height={56}
+            src={this.props.imageUrl}
+            circle
+          />
+        </Media.Left>
+        <Media.Body>
+          <Media.Heading>{this.props.username} <small>{this.props.timestamp}</small></Media.Heading>
+          <p>{this.props.text}</p>
+        </Media.Body>
+      </Media>
+    )
+  }
+}
+
+Message.propTypes = {
+  text: PropTypes.string.isRequired,
+  username: PropTypes.string,
+  imageUrl: PropTypes.string,
+  timestamp: PropTypes.number
+}
+
+Message.defaultProps = {
+  username: 'Anonym',
+  imageUrl: 'public/images/goat.png',
+  timestamp: 0
+}
+```
+Vad har ändrats?
+1. Vi har importerat `Image` från `react-bootstrap` och använt komponenten för att rita upp en avatar till vänster om meddelandet.
+2. Vi har defaultat `imageUrl` till någon default-bild.
+3. Vi ritar nu ut `timestamp` bredvid användarnamnet.
 
 
 
