@@ -725,7 +725,7 @@ Vad har ändrats?
 3. Vi ritar nu ut `timestamp` bredvid användarnamnet.
 
 Ladda om appen och se hur det ser ut.
-###### Simpelt inputfält
+###### Bild och timestamp
 ![](https://github.com/simonolander/konferenschatten/blob/master/screenshots/image-and-timestamp.png "Det börjar ta sig, eller hur?")
 
 
