@@ -724,6 +724,9 @@ Vad har ändrats?
 2. Vi har defaultat `imageUrl` till någon default-bild.
 3. Vi ritar nu ut `timestamp` bredvid användarnamnet.
 
+Ladda om appen och se hur det ser ut.
+###### Simpelt inputfält
+![](https://github.com/simonolander/konferenschatten/blob/master/screenshots/image-and-screenshot.png "Det börjar ta sig, eller hur?")
 
 
 ##### webpack.config.js
