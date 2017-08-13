@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Button, Form, FormControl, FormGroup, InputGroup } from 'react-bootstrap'
 
 class MessageInput extends Component {
 
@@ -12,10 +13,20 @@ class MessageInput extends Component {
 
   render () {
     return (
-      <form onSubmit={this.onSubmit.bind(this)}>
-        <input name='text' />
-        <button>Skicka</button>
-      </form>
+    <Form onSubmit={this.onSubmit.bind(this)}>
+      <FormGroup>
+        <InputGroup>
+          <FormControl
+            className='col-md-10'
+            name='text'
+            autoFocus
+          />
+          <InputGroup.Button>
+            <Button type='submit'>Skicka</Button>
+          </InputGroup.Button>
+        </InputGroup>
+      </FormGroup>
+    </Form>
     )
   }
 }

@@ -532,11 +532,89 @@ Vi behöver även lägga till tre css-filer i vår `index.html` och sätta `clas
   {this.props.messages.map(text => <li>{text}</li>)}
 </div>
 ```
-På https://react-bootstrap.github.io/components.html hittar vi exempel på deras komponenter och hur vi kan använda dem. 
+Vi ska ta och göra något åt input-fältet också. 
+På https://react-bootstrap.github.io/components.html hittar vi exempel på deras komponenter och hur vi kan använda dem.
+Vi kommer att använda deras `Form`-komponent, med tillhörande komponenter.
 
+###### MessageInput.jsx
+```jsx harmony
+import { Button, Form, FormControl, FormGroup, InputGroup } from 'react-bootstrap'
 
+class MessageInput extends Component {
 
+  onSubmit (event) {
+    const text = event.target.text.value
+    event.preventDefault()
+    event.target.reset()
 
+    this.props.onSubmit(text)
+  }
+
+  render () {
+    return (
+    <Form onSubmit={this.onSubmit.bind(this)}>
+      <FormGroup>
+        <InputGroup>
+          <FormControl
+            className='col-md-10'
+            name='text'
+            autoFocus
+          />
+          <InputGroup.Button>
+            <Button type='submit'>Skicka</Button>
+          </InputGroup.Button>
+        </InputGroup>
+      </FormGroup>
+    </Form>
+    )
+  }
+}
+```
+Ladda om sidan och se hur det ser ut.
+
+### `Message.jsx`
+Vi har fortfarande inte gjort någon ansträngning för att rita upp själva meddelandet. 
+I en bra chat-app vill man inte endast se vad som skrivits, utan också vem som skrivit vad.
+I Bootstrap finns det en komponent vid namn `Media` som passar våra ändamål
+
+###### Message.jsx
+```jsx harmony
+import React, { Component, PropTypes } from 'react'
+import { Media } from 'react-bootstrap'
+
+class Message extends Component {
+
+  render () {
+    return (
+      <Media className='message'>
+        <Media.Body>
+          <Media.Heading>{this.props.username}</Media.Heading>
+          <p>{this.props.text}</p>
+        </Media.Body>
+      </Media>
+    )
+  }
+}
+
+Message.propTypes = {
+  text: PropTypes.string.isRequired,
+  username: PropTypes.string
+}
+
+Message.defaultProps = {
+  username: 'Anonym'
+}
+```
+
+Vad har ändrats?
+1. Vi har importerat `Media` från `react-bootstrap` och använt dess komponenter för att rita upp vårt meddelande.
+2. Vi har definierat en ny prop, `username`, där vi kan skriva vem som skrev meddelandet.
+3. Vi har specat två statiska variabler `propTypes` och `defaultProps` på vår klass.
+   1. `propTypes` låter oss berätta vilka `props` som en komponent förväntar sig, vilka typer de har, och huruvida de är required. 
+   Om en required prop saknas under runtime så genereras en varning.
+   2. `defaultProps` låter oss definiera default-värden för våra props, ifall de inte är satta av föräldern.
+
+###
 
 
 
