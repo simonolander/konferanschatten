@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Image, Media } from 'react-bootstrap'
+import moment from 'moment'
+
+moment.locale('sv')
 
 class Message extends Component {
 
@@ -16,7 +19,7 @@ class Message extends Component {
           />
         </Media.Left>
         <Media.Body>
-          <Media.Heading>{this.props.username} <small>{this.props.timestamp}</small></Media.Heading>
+          <Media.Heading>{this.props.username} <small>{moment(this.props.timestamp).calendar()}</small></Media.Heading>
           <p>{this.props.text}</p>
         </Media.Body>
       </Media>

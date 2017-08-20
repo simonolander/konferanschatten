@@ -919,9 +919,40 @@ Det finns ett paket vid namn [Moment](https://momentjs.com/) som sköter datum o
 ```commandline
 npm install moment --save
 ```
+###### Message.jsx
+```jsx harmony
+import moment from 'moment'
+
+moment.locale('sv')
+
+class Message extends Component {
+
+  render () {
+    return (
+      <Media className='message'>
+        <Media.Left>
+          <Image
+            width={56}
+            height={56}
+            src={this.props.imageUrl}
+            circle
+          />
+        </Media.Left>
+        <Media.Body>
+          <Media.Heading>{this.props.username} <small>{moment(this.props.timestamp).calendar()}</small></Media.Heading>
+          <p>{this.props.text}</p>
+        </Media.Body>
+      </Media>
+    )
+  }
+}
+```
+
+### Autoscroll
+Vid det här laget har ni säkert märkt att vi manuellt behöver scrolla listan för att se nya meddelanden.
+Det är 
 
 #TODO
-1. timestamp
 2. scroll to bottom
 3. username colors
 4. 
