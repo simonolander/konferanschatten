@@ -893,35 +893,35 @@ Den kommer anropa metoden med jämna mellanrum, och skickar tillbaka en referens
 3. `componentWillUnmount` är en annan livscykelmetod i react som körs när komponenten plockas bort.
 4. Vi har ändrat `postMessage` så att den också använder `getLatestMessages`.
 
+### Unique `key` prop
+Under hela labben vi fått varningen `Warning: Each child in an array or iterator should have a unique "key" prop. Check the render method of MessageList`.
+React använder keys för att hålla koll på när komponenter läggs till, tas bort, och ändras. 
+En key är bara ett unikt id för en komponent bland sina syskon, och viktig när vi rendrerar många komponenter parallellt,
+som vi gör i `MessageList`. Praktiskt för oss är att alla meddelanden har ett unikt id som sätts av servern.
+Vi tar och skickar med det när vi instantierar `Message`.
 
-##### webpack.config.js
-```
-resolve: {
-  extensions: ['.js', '.jsx'],
+###### MessageList.jsx
+```jsx harmony
+render () {
+  return (
+    <div className='message-list'>
+      {this.props.messages.map(message => <Message key={message.id} {...message} />)}
+    </div>
+  )
 }
 ```
-```
-npm install --save prop-types
-```
-```
-body, html {
-    background: url("public/images/topography.png");
-}
-```
-```
-<Media>
-    <Media.Left>
-        <img width={64} height={64} src="/assets/thumbnail.png" alt="Image"/>
-    </Media.Left>
-    <Media.Body>
-        <Media.Heading>Media Heading</Media.Heading>
-        <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
-    </Media.Body>
-</Media>
-```
-```
-npm install axios --save
-```
-```
+Kontrollera att varningarna är borta.
+
+### Timestamp
+Vi har haft vår timestamp bredvid namnet ett tag nu. Det skulle vara fint om det faktiskt stog ett datum där.
+Det finns ett paket vid namn [Moment](https://momentjs.com/) som sköter datum och tidsformattering på ett juste sätt.
+
+```commandline
 npm install moment --save
 ```
+
+#TODO
+1. timestamp
+2. scroll to bottom
+3. username colors
+4. 
