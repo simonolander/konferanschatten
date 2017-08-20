@@ -950,9 +950,61 @@ class Message extends Component {
 
 ### Autoscroll
 Vid det här laget har ni säkert märkt att vi manuellt behöver scrolla listan för att se nya meddelanden.
-Det är 
+Vi skulle vilja att listan autoscrollade till botten när det kommer in nya meddelanden.
+Det borde dock bara ske om listan redan är i botten, annars får vi svårt att läsa gamla meddelanden.
+
+###### MessageList.jsx
+```jsx harmony
+class MessageList extends Component {
+
+  constructor (props) {
+    super(props)
+    this.onScroll = this.onScroll.bind(this)
+    this.scrolledToBottom = true
+  }
+
+  componentDidUpdate () {
+    if (this.scrolledToBottom) {
+      this.scrollToBottom()
+    }
+  }
+
+  onScroll () {
+    this.scrolledToBottom = this.list.scrollHeight - this.list.scrollTop === this.list.clientHeight
+  }
+
+  scrollToBottom () {
+    this.list.scrollTop = this.list.scrollHeight
+  }
+
+  render () {
+    return (
+      <div onScroll={this.onScroll} ref={element => this.list = element} className='message-list'>
+        {this.props.messages.map(message => <Message key={message.id} {...message} />)}
+      </div>
+    )
+  }
+}
+```
+Vad har ändrats?
+1. Vi har lagt till en ny metod `componentDidUpdate`. Den anropas efter varje omrendrering av komponenten. 
+I vårt fall kommer komponenten bara att ritas om när vi skickar in nya meddelanden.
+Om vi precis var i botten på listan vill vi scrolla till botten igen efter omrendreringen.
+2. Vi skickar med `onScroll` till vår div. Varje gång det sker en scroll kollar vi om vi numera är i botten på listen.
+3. Vi skickar även med en funktion i `ref`. När vår div rendrerats kommer vi att spara undan en referens till den.
+4. I konstruktorn sätter vi `scrolledToBottom` till sant, då vi vill börja med listan i botten.
+
+Kolla att listan beter sig som vi vill.
+
+###### Disable when posting
+Ni har kanske upptäckt att vi kan skicka iväg flera meddelanden innan vi får tillbaka svar från servern.
+Det är dåligt dels för att man lätt kan spamma chatten, 
+och dels för att vi skapar race conditions när vi har flera request i luften samtidigt.
+
+Låt oss fixa till det.
 
 #TODO
+1. ---Timestamp
 2. scroll to bottom
 3. username colors
-4. 
+4. disable when posting
