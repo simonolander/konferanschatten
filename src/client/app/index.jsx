@@ -16,7 +16,8 @@ class App extends Component {
     this.loadLatestMessages = this.loadLatestMessages.bind(this)
 
     this.state = {
-      messages: []
+      messages: [],
+      disablePosting: false
     }
   }
 
@@ -45,7 +46,7 @@ class App extends Component {
       ? messages[length - 1].id
       : 0
 
-    axios.get(`${url}?id=${latestId}`)
+    return axios.get(`${url}?id=${latestId}`)
       .then(response => response.data)
       .then(messages => messages.length && this.setState(oldState => ({
         messages: oldState.messages.concat(messages)
@@ -59,10 +60,18 @@ class App extends Component {
       username: 'Simon'
     }
 
+    this.setState({
+      disablePosting: true
+    })
+
     axios.post(url, message)
       .then(response => response.data)
-      .then(this.loadLatestMessages)
-      .catch(console.error)
+      .then(() => this.loadLatestMessages()
+        .then(() => this.setState({ disablePosting: false })))
+      .catch(error => {
+        this.setState({ disablePosting: false })
+        console.error(error)
+      })
   }
 
   render () {
@@ -74,6 +83,7 @@ class App extends Component {
           />
           <MessageInput
             onSubmit={this.postMessage.bind(this)}
+            disabled={this.state.disablePosting}
           />
         </div>
       </div>

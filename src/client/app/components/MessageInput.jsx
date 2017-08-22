@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Button, Form, FormControl, FormGroup, InputGroup } from 'react-bootstrap'
 
 class MessageInput extends Component {
@@ -13,22 +14,32 @@ class MessageInput extends Component {
 
   render () {
     return (
-    <Form onSubmit={this.onSubmit.bind(this)}>
+    <Form onSubmit={this.onSubmit.bind(this)}>
       <FormGroup>
         <InputGroup>
           <FormControl
+            key={this.props.disabled}
             className='col-md-10'
             name='text'
+            disabled={this.props.disabled}
             autoFocus
           />
           <InputGroup.Button>
-            <Button type='submit'>Skicka</Button>
+            <Button disabled={this.props.disabled} type='submit'>Skicka</Button>
           </InputGroup.Button>
         </InputGroup>
       </FormGroup>
     </Form>
     )
   }
+}
+
+MessageInput.propTypes = {
+  disabled: PropTypes.bool
+}
+
+MessageInput.defaultProps = {
+  disabled: false
 }
 
 export default MessageInput

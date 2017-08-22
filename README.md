@@ -388,7 +388,7 @@ class MessageInput extends Component {
   }
 }
 ```
-Vad har ändrats?
+##### Vad har ändrats?
 1. `event.target.text.value` är värdet i vårt text-input vid eventet.
 2. `event.preventDefault()` hindrar formuläret från att uppdatera sidan.
 3. `event.target.reset()` återställer alla input-fält i formuläret.
@@ -436,7 +436,7 @@ class App extends Component {
   }
 }
 ```
-Vad har ändrats?
+##### Vad har ändrats?
 1. Vi har skapat en `constructor` som körs när komponenten skapas för första gången.
 2. I `constructor` initierar vi `state` med en tom lista `state.messages`.
 3. I `postMessage` lägger vi på `text` på `this.state.messages` och sparar det i state via `setState`.
@@ -477,7 +477,7 @@ class MessageList extends Component {
   }
 }
 ```
-Vad har ändrats?
+##### Vad har ändrats?
 1. Vi skickar med `this.state.messages` som en *property* till `MessageList`, och tog i samma veva bort konsollutskriften.
 2. I `MessageList` så rendrerar vi en `<ul>`-tag med en `<li>` för varje meddelande i `this.props.messages`.
 
@@ -606,7 +606,7 @@ Message.defaultProps = {
 }
 ```
 
-Vad har ändrats?
+##### Vad har ändrats?
 1. Vi har importerat `Media` från `react-bootstrap` och använt dess komponenter för att rita upp vårt meddelande.
 2. Vi har importerat `PropTypes` från `prop-types` för att kunna speca vilka props vi förväntar oss.
 3. Vi har definierat en ny prop, `username`, där vi kan skriva vem som skrev meddelandet.
@@ -632,7 +632,7 @@ postMessage (text) {
   })
 }
 ```
-Vad har ändrats?
+##### Vad har ändrats?
 1. Istället för att spara `messages` som en lista med strängar sparar vi dem som objekt med flera värden.
 2. Vi har defaultat `username` till något hårdkodat värde tills vidare.
 
@@ -660,7 +660,7 @@ MessageList.defaultProps = {
   messages: []
 }
 ```
-Vad har ändrats?
+##### Vad har ändrats?
 1. Vi har ändrat så att `messages` innehåller message-objekt istället för bara text.
 `{...message}` är es6 och låter oss packa upp ett objekt och skicka dess innehåll som separata props.
 2. Vi har specat `propTypes` för den här klassen också.
@@ -677,7 +677,7 @@ const message = {
   timestamp: + new Date()
 }
 ```
-Vad har ändrats?
+##### Vad har ändrats?
 1. Vi har lagt till `timestamp` i message-objektet, det plockas lättast ut i javascript genom `+ new Date()`.
 
 ###### Message.jsx
@@ -719,7 +719,7 @@ Message.defaultProps = {
   timestamp: 0
 }
 ```
-Vad har ändrats?
+##### Vad har ändrats?
 1. Vi har importerat `Image` från `react-bootstrap` och använt komponenten för att rita upp en avatar till vänster om meddelandet.
 2. Vi har defaultat `imageUrl` till någon default-bild.
 3. Vi ritar nu ut `timestamp` bredvid användarnamnet.
@@ -794,7 +794,7 @@ class App extends Component {
   }
 }
 ```
-Vad har ändrats?
+##### Vad har ändrats?
 1. Vi har importerat `axios` från `axios`. Paketet låter oss enkelt göra rest-anrop till vår server.
 2. Vi har specat en `url` variable med addressen till vår server.
 3. Vi har skapat en ny metod `loadMessages` som hämtar alla meddelanden från servern och sparar dem i `state`.
@@ -847,7 +847,7 @@ class App extends Component {
       ? messages[length - 1].id
       : 0
 
-    axios.get(`${url}?id=${latestId}`)
+    return axios.get(`${url}?id=${latestId}`)
       .then(response => response.data)
       .then(messages => messages.length && this.setState(oldState => ({
         messages: oldState.messages.concat(messages)
@@ -883,7 +883,7 @@ class App extends Component {
   }
 }
 ```
-Vad har ändrats?
+##### Vad har ändrats?
 1. Vi har skapat en ny metod `loadLatestMessages` som frågar servern efter de meddelanden efter ett visst id.
 Här ser vi en ny typ av `setState` som tar en funktion istället för ett nytt state.
 I funktionen får vi det gamla statet, vilket är bra om vi har många trådar som sätter state.
@@ -986,7 +986,7 @@ class MessageList extends Component {
   }
 }
 ```
-Vad har ändrats?
+##### Vad har ändrats?
 1. Vi har lagt till en ny metod `componentDidUpdate`. Den anropas efter varje omrendrering av komponenten. 
 I vårt fall kommer komponenten bara att ritas om när vi skickar in nya meddelanden.
 Om vi precis var i botten på listan vill vi scrolla till botten igen efter omrendreringen.
@@ -1003,8 +1003,117 @@ och dels för att vi skapar race conditions när vi har flera request i luften s
 
 Låt oss fixa till det.
 
+###### index.jsx
+```jsx harmony
+class App extends Component {
+
+  constructor (props) {
+    super(props)
+    
+    this.loadMessages = this.loadMessages.bind(this)
+    this.loadLatestMessages = this.loadLatestMessages.bind(this)
+
+    this.state = {
+      messages: [],
+      disablePosting: false
+    }
+  }
+  
+  // ...
+
+  postMessage (text) {
+    const message = {
+      text: text,
+      username: 'Simon'
+    }
+
+    this.setState({
+      disablePosting: true
+    })
+
+    axios.post(url, message)
+      .then(response => response.data)
+      .then(() => this.loadLatestMessages()
+        .then(() => this.setState({ disablePosting: false })))
+      .catch(error => {
+        this.setState({ disablePosting: false })
+        console.error(error)
+      })
+  }
+
+  render () {
+    return (
+      <div className='app row'>
+        <div className='col-xs-6 col-xs-offset-3'>
+          <MessageList
+            messages={this.state.messages}
+          />
+          <MessageInput
+            onSubmit={this.postMessage.bind(this)}
+            disabled={this.state.disablePosting}
+          />
+        </div>
+      </div>
+    )
+  }
+}
+```
+##### Vad har ändrats?
+1. Vi har lagt till en ny state-variable `disablePosting` som håller koll på huruvida vi ska tillåta nya meddelanden.
+2. I början på `postMessage` sätter vi `disablePosting` till `true`, och i slutet av posten så sätter vi den till `false` igen.
+Det kan ske på två sätt, antingen när `loadLatestMessage` är klar, eller om posten misslyckas.
+3. Vi skickar med `disablePosting` till `MessageInput`
+
+###### MessageInput.jsx
+```jsx harmony
+class MessageInput extends Component {
+
+  onSubmit (event) {
+    const text = event.target.text.value
+    event.preventDefault()
+    event.target.reset()
+
+    this.props.onSubmit(text)
+  }
+
+  render () {
+    return (
+    <Form onSubmit={this.onSubmit.bind(this)}>
+      <FormGroup>
+        <InputGroup>
+          <FormControl
+            key={this.props.disabled}
+            className='col-md-10'
+            name='text'
+            disabled={this.props.disabled}
+            autoFocus
+          />
+          <InputGroup.Button>
+            <Button disabled={this.props.disabled} type='submit'>Skicka</Button>
+          </InputGroup.Button>
+        </InputGroup>
+      </FormGroup>
+    </Form>
+    )
+  }
+}
+
+MessageInput.propTypes = {
+  disabled: PropTypes.bool
+}
+
+MessageInput.defaultProps = {
+  disabled: false
+}
+```
+##### Vad har ändrats?
+1. Vi har lagt till `disabled` som en ny property, och defaultat den till `false`.
+2. Vi skickar i sin tur vidare `disabled` till både `FormControl` och `Button`.
+3. Vi låter äver nyckeln till `FormControl` bero på `disabled` p.g.a. en feature i hur autoFocus fungerar.
+
 #TODO
 1. ---Timestamp
-2. scroll to bottom
+2. ---scroll to bottom
 3. username colors
 4. disable when posting
+5. no empty messages
