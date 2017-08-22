@@ -715,7 +715,7 @@ Message.propTypes = {
 
 Message.defaultProps = {
   username: 'Anonym',
-  imageUrl: 'public/images/goat.png',
+  imageUrl: 'public/images/anon.png',
   timestamp: 0
 }
 ```
