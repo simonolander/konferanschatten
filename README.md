@@ -769,7 +769,8 @@ class App extends Component {
   postMessage (text) {
     const message = {
       text: text,
-      username: 'Simon'
+      username: 'Simon',
+      imageUrl: 'public/images/cow.png'
     }
 
     axios.post(url, message)
