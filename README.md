@@ -1112,8 +1112,6 @@ MessageInput.defaultProps = {
 3. Vi låter äver nyckeln till `FormControl` bero på `disabled` p.g.a. en feature i hur autoFocus fungerar.
 
 #TODO
-1. ---Timestamp
-2. ---scroll to bottom
+1. loader
 3. username colors
-4. disable when posting
 5. no empty messages
