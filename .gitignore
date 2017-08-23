@@ -60,4 +60,5 @@ typings/
 # custom
 *.swp
 src/client/public/bundle.js
+konferenschatten-complete/src/client/public/bundle.js
 .idea

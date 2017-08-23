@@ -572,7 +572,7 @@ class MessageInput extends Component {
 ```
 Ladda om sidan och se hur det ser ut.
 
-### `Message.jsx`
+### Upritning av meddelanden
 Vi har fortfarande inte gjort någon ansträngning för att rita upp själva meddelandet. 
 I en bra chat-app vill man inte endast se vad som skrivits, utan också vem som skrivit vad.
 I Bootstrap finns det en komponent vid namn `Media` som passar våra ändamål
@@ -615,7 +615,7 @@ Message.defaultProps = {
    Om en required prop saknas under runtime så genereras en varning.
    2. `defaultProps` låter oss definiera default-värden för våra props, ifall de inte är satta av föräldern.
 
-### `username`
+### Vem skrev vad?
 Vi har gjort så att `Message` ritar upp `username` om det kommer in från props, men inte skickat in något än.
 `username` är en del av ett meddelande, så vi borde pakettera både `text` och `username` i samma objekt.
 
@@ -728,7 +728,7 @@ Ladda om appen och se hur det ser ut.
 ###### Bild och timestamp
 ![](https://github.com/simonolander/konferenschatten/blob/master/screenshots/image-and-timestamp.png "Det börjar ta sig, eller hur?")
 
-### Online
+## Online
 Det är inte mycket av en chat om man bara pratar med sig själv. I nästa steg ska vi koppla ihop appen med en server.
 För att sköta kommunikationen smidigt kommer vi att använda ett bibliotek som heter [Axios](https://github.com/mzabriskie/axios).
 ```commandline
@@ -1111,6 +1111,8 @@ MessageInput.defaultProps = {
 1. Vi har lagt till `disabled` som en ny property, och defaultat den till `false`.
 2. Vi skickar i sin tur vidare `disabled` till både `FormControl` och `Button`.
 3. Vi låter äver nyckeln till `FormControl` bero på `disabled` p.g.a. en feature i hur autoFocus fungerar.
+
+## Om vi har tid
 
 ### Små saker att göra
 1. Ge alla användare en egen färg på användarnamnet
