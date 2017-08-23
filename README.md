@@ -31,16 +31,22 @@ git clone https://github.com/simonolander/konferenschatten
 ```
 Alternativt kan du hämta repot som en `.zip` på https://github.com/simonolander/konferenschatten/archive/master.zip.
 
-Byt namn på foldern till `konferenschatten-complete` el.dyl. och skapa upp en folder parallellt med namnet `konferenschatten`. Du borde se
+Gå till foldern som du precis skapade. Du borde se
 ```commandline
-ls
-konferenschatten    konferenschatten-complete
+sios:konferenschatten sios$ ls
+LICENSE				konferenschatten-complete
+README.md			screenshots
 ```
+`konferenschatten-complete` innehåller ett komplett project av det vi kommer göra i labben.
+Vi kommer att hämta lite bild- och css-filer därifrån under labbens gång, och om någonting någon gång är oklart
+i den här texten kan du använda foldern som ett facit.
 ## Setup
 
 ### Projektstruktur
-Vi ska nu sätta upp ett nytt projekt. Gå till den tomma foldern som du skapade i det förra steget, hädanefter `konferenschatten` och kör
-```
+Vi ska nu sätta upp ett nytt projekt. Gå antingen till foldern som vi git clonade i förra steget, eller skapa en ny tom folder någonstans. 
+Jag kommer att kalla denna folder för `konferenschatten` och den kommer att vara roten i vårt projekt.
+Gå till `konferenschatten` och kör
+```commandline
 npm init
 ```
 `npm` kommer att fråga dig om information om projektet. Du kan lämna alla fält tomma men det skadar inte att fylla i `description` och `author` om du känner för det. Det kommer att skapas en `package.json` fil i foldern med innehållet
