@@ -21,6 +21,7 @@ class Message extends Component {
         <Media.Body>
           <Media.Heading>{this.props.username} <small>{moment(this.props.timestamp).calendar()}</small></Media.Heading>
           <p>{this.props.text}</p>
+          {this.props.data.image && <Image className='image' src={this.props.data.image}/>}
         </Media.Body>
       </Media>
     )
@@ -31,13 +32,15 @@ Message.propTypes = {
   text: PropTypes.string.isRequired,
   username: PropTypes.string,
   imageUrl: PropTypes.string,
-  timestamp: PropTypes.number
+  timestamp: PropTypes.number,
+  data: PropTypes.object
 }
 
 Message.defaultProps = {
   username: 'Anonym',
   imageUrl: 'public/images/anon.png',
-  timestamp: 0
+  timestamp: 0,
+  data: {}
 }
 
 export default Message

@@ -1112,7 +1112,14 @@ MessageInput.defaultProps = {
 2. Vi skickar i sin tur vidare `disabled` till både `FormControl` och `Button`.
 3. Vi låter äver nyckeln till `FormControl` bero på `disabled` p.g.a. en feature i hur autoFocus fungerar.
 
-#TODO
-1. loader
-3. username colors
-5. no empty messages
+### Små saker att göra
+1. Ge alla användare en egen färg på användarnamnet
+2. Hindra användare `MessageInput` från att posta tomma meddelanden
+3. Gör en loader
+4. GUI för att byta användarnamn och bild
+
+### Stora saker att göra
+1. Reactions!
+2. Trådar!
+3. Scroll into view!
+4. Gifar

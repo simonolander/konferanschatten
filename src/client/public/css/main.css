@@ -19,3 +19,9 @@
     border-radius: 36px 14px 14px 14px;
     padding: 8px;
 }
+
+.image {
+    max-height: 200px;
+    max-width: 100%;
+    border-radius: 14px 14px 14px 14px;
+}

@@ -65,14 +65,42 @@ class App extends Component {
       disablePosting: true
     })
 
-    axios.post(url, message)
-      .then(response => response.data)
-      .then(() => this.loadLatestMessages()
-        .then(() => this.setState({ disablePosting: false })))
-      .catch(error => {
-        this.setState({ disablePosting: false })
-        console.error(error)
-      })
+    if (text.startsWith("/giphy ")) {
+      const search = text.substr(7)
+      axios.get('https://api.giphy.com/v1/gifs/translate?api_key=dd3de424d2444be489924cc38f29706d&s=' + search)
+        .then(response => response.data)
+        .then(data => {
+          console.log(data)
+          message.text = ''
+          message.data = {
+            image: data.data.images.fixed_height.url
+          }
+
+          axios.post(url, message)
+            .then(response => response.data)
+            .then(() => this.loadLatestMessages()
+              .then(() => this.setState({ disablePosting: false })))
+            .catch(error => {
+              this.setState({ disablePosting: false })
+              console.error(error)
+            })
+
+        })
+        .catch(error => {
+          this.setState({ disablePosting: false })
+          console.error(error)
+        })
+    }
+    else {
+      axios.post(url, message)
+        .then(response => response.data)
+        .then(() => this.loadLatestMessages()
+          .then(() => this.setState({ disablePosting: false })))
+        .catch(error => {
+          this.setState({ disablePosting: false })
+          console.error(error)
+        })
+    }
   }
 
   render () {
